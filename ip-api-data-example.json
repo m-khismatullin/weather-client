@@ -1,0 +1,16 @@
+{
+  "query": "31.8.223.80",
+  "status": "success",
+  "country": "Russia",
+  "countryCode": "RU",
+  "region": "BA",
+  "regionName": "Bashkortostan Republic",
+  "city": "Ufa",
+  "zip": "450000",
+  "lat": 54.7505,
+  "lon": 55.9457,
+  "timezone": "Asia/Yekaterinburg",
+  "isp": "Bashinformsvyaz Company, RUMS, DSL",
+  "org": "Bashinformsvyaz Company",
+  "as": "AS28812 PJSC \"Bashinformsvyaz\""
+}

@@ -1,0 +1,24 @@
+ipstack:
+  api:
+    key: 19adf0e7c52028c75a8fa8133b9ef242
+quarkus:
+  http:
+    port: 8081
+  #  log:
+  #    category:
+  #      "org.jboss.resteasy.reactive.client.logging":
+  #        level:  DEBUG
+  rest-client:
+    read-timeout: 90000
+    logging:
+      scope: request-response
+      body-limit: 1024
+    ip-api:
+      #      verify-host:  false
+      scope: jakarta.inject.Singleton
+    "ru.km.weather.client.rest.IpApiClient":
+      url: http://ip-api.com/json/
+    weather-subscription-api:
+      scope: jakarta.inject.Singleton
+    "ru.km.weather.client.rest.WeatherSubscriberClient":
+      url: http://localhost:8080/subscriber/
