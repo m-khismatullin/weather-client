@@ -4,10 +4,10 @@ ipstack:
 quarkus:
   http:
     port: 8081
-  #  log:
-  #    category:
-  #      "org.jboss.resteasy.reactive.client.logging":
-  #        level:  DEBUG
+    log:
+      category:
+        "org.jboss.resteasy.reactive.client.logging":
+          level:  DEBUG
   rest-client:
     read-timeout: 90000
     logging:
