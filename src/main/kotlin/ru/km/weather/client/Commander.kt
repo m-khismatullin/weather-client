@@ -96,18 +96,18 @@ class Commander : QuarkusApplication {
 //            .subscribe()
 //            .with { Log.info(it) }
 
-        extraCityList.forEach {
-            weatherSubscriberClient
-                .addSubscribe(
-                    SubscriberDto(
-                        it.name,
-                        it.lat,
-                        it.lon
-                    )
-                )
-                .subscribe()
-                .with { Log.info(it) }
-        }
+//        extraCityList.forEach {
+//            weatherSubscriberClient
+//                .addSubscribe(
+//                    SubscriberDto(
+//                        it.name,
+//                        it.lat,
+//                        it.lon
+//                    )
+//                )
+//                .subscribe()
+//                .with { Log.info(it) }
+//        }
 
         Quarkus.waitForExit()
 
