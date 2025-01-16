@@ -5,6 +5,9 @@ import io.quarkus.runtime.Quarkus
 import io.quarkus.runtime.QuarkusApplication
 import io.quarkus.runtime.annotations.QuarkusMain
 import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.eclipse.microprofile.rest.client.inject.RestClient
 import ru.km.weather.client.dto.CityBriefDto
 import ru.km.weather.client.dto.SubscriberDto
@@ -67,47 +70,47 @@ class Commander : QuarkusApplication {
     private lateinit var weatherSubscriberClient: WeatherSubscriberClient
 
     override fun run(vararg args: String?): Int {
-        ipApiClientService.getIpGeolocationData()
-            .onItem()
-            .invoke { data ->
-                Log.info(data)
-            }
-            .onItem()
-            .transformToUni { data ->
-                weatherSubscriberClient.addSubscribe(
-                    SubscriberDto(
-                        data.city ?: "unknown",
-                        data.lat,
-                        data.lon
+        runBlocking {
+            Log.info("start")
+
+            launch {
+                val ipGeoData = ipApiClientService.getIpGeolocationData()
+                Log.info(
+                    weatherSubscriberClient.addSubscribe(
+                        SubscriberDto(
+                            ipGeoData.city ?: "unknown",
+                            ipGeoData.lat,
+                            ipGeoData.lon
+                        )
                     )
                 )
             }
-            .subscribe()
-            .with { Log.info(it) }
 
-//        weatherSubscriberClient
-//            .addSubscribe(
-//                SubscriberDto(
-//                    "Подымалово",
-//                    54.867,
-//                    55.750
-//                )
-//            )
-//            .subscribe()
-//            .with { Log.info(it) }
+            launch {
+                Log.info(
+                    weatherSubscriberClient.addSubscribe(
+                        SubscriberDto(
+                            "Подымалово",
+                            54.867,
+                            55.750
+                        )
+                    )
+                )
+            }
 
-//        extraCityList.forEach {
-//            weatherSubscriberClient
-//                .addSubscribe(
-//                    SubscriberDto(
-//                        it.name,
-//                        it.lat,
-//                        it.lon
+//            extraCityList.forEach {
+//                launch(Dispatchers.IO) {
+//                    val extraSub = weatherSubscriberClient.addSubscribe(
+//                        SubscriberDto(
+//                            it.name,
+//                            it.lat,
+//                            it.lon
+//                        )
 //                    )
-//                )
-//                .subscribe()
-//                .with { Log.info(it) }
-//        }
+//                    Log.info(extraSub)
+//                }
+//            }
+        }
 
         Quarkus.waitForExit()
 
